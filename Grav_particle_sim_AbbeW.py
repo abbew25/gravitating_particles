@@ -1,4 +1,4 @@
-# Abbe Whitford s4638026 PHYS4080
+# Abbe Whitford: 22/08/2020
 
 # About:
 # This code simulates gravitating particles and also calculates their correlation
