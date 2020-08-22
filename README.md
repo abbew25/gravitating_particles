@@ -6,7 +6,7 @@ In each update, the correlation function of the separation of pairs of particles
 
 # Example video:
 Follow the link below for some example videos of the simulation and a brief explanation of what is happening! :)
-![Particle simulation image](/gravitating_particles/Screenshot (188).png)
+![Particle simulation image](Screenshot (188).png)
 Format: ![Alt Text](url)
 
 # Running the code:
