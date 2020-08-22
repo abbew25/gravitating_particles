@@ -81,3 +81,16 @@ The function ```update()```:
 - calculates the power spectrum by calling ```power_spectrum2()``` (which calls ```Pk()```) to numerically integration the correlation function to get the power spectrum and then sets the data in the plot for that update with the command ```points3```
 
 # Interpreting the results 
+1) The particle distribution: 
+•	if the particles just fly out, there initial velocity or their masses may be very high, so they are accelerated away from each. ALthough they should be attracted to each other due to their gravity, they are able to gain a lot of acceleration and be flung out of the n-body system as they gain a lot of energy
+•	if they don’t move at all, they may be too far apart and or have an initial velocity that is too low (the gravitational attraction between the particles is too weak to make them move much over the time during the simulation)
+•	if they fly around and don’t seem to interact, the velocity is probably very high (their kinetic energy is greater than the potential energy due to gravitational attractions)
+
+2) Correlation function:
+•	if the distribution is very big at small r, many particles should be close to each other in the plot showing the particle distribution (we expect the probability of finding particles at small separations to be large!) The same idea in the opposite situation
+•	If the plot is totally zero everywhere the particles have no correlations at all - so the distribution in the particle distribution plot should appear uniform!
+
+3) Power spectrum:
+•	If the power spectrum is large at low frequencies (k) the particles may have non-zero correlations at larger separations, and vice versa (you are likely to find particles separated by small frequencies or large etc.)
+
+Overall, the results for the correlation function and power spectrum should have some reflection on the distribution of particles. If the distribution ‘t’ is input to the simulation, the correlation function will for example, initially have peaks like a delta function at 3 places: at very small separations due to the four clumps of close by particles, at separations equal to the length/side of the ‘box’ the 4 blobs of particles make and at another separation corresponding to the diagonal of the box the blobs of particles will make.
