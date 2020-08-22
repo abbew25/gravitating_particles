@@ -1,4 +1,4 @@
-# gravitating_particles_simulation:
+# About:
 
 This code simulates a system of gravitating particles and plots their distribution in space (plots in 2D, although a 3D distribution may be chosen). The updates to the positions and velocities of particles are calculated with the leapfrog method (similar to Euler’s method). 
 
