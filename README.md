@@ -68,5 +68,16 @@ The leapfrog method uses the follow scheme to update particle positions and velo
 Steps 2) to 3) are repeated in every update after the first one.
 
 # Brief explanation of function hierarchy
+The main program just gets user input and then calls ```run_particle_sim()```.
+
+```run_particle_sim()```:
+- set ups initial values of parameters /quantities needed / initialises variables
+- sets up the settings and commands for plotting
+- calls the function ```animation.FuncAnimation()``` which calls the function ```update()``` many times
+
+The function ```update()```:
+- calculates updates to each of the particles in the distribution (calls ```acceleration()``` to calculate the acceleration on each of the particles and ```apply_boundary()``` to apply the boundary condition). It then sets the data in the ```scatter()``` plot for the particle distribution for the update with the command ```points``` 
+- calculates the correlation function by calling ```separation()``` and then sets the data in the plot for that update with the command ```points2```
+- calculates the power spectrum by calling ```power_spectrum2()``` (which calls ```Pk()```) to numerically integration the correlation function to get the power spectrum and then sets the data in the plot for that update with the command ```points3```
 
 # Interpreting the results 
