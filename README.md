@@ -50,7 +50,7 @@ The power spectrum is computed via numerical integration. Note the integral in t
 
 The softening length η is incorporated into the equation below for the force  between two particles of mass i and j at separation r when r is less than η:
 
-<img src="https://render.githubusercontent.com/render/math?math= F_{ij} = - \frac{G M_i M_j}{r %2B \eta }^2">
+<img src="https://render.githubusercontent.com/render/math?math= F_{ij} = -\frac{G M_i M_j}{r %2B \eta }^2">
 
 The leapfrog method uses the follow scheme to update particle positions and velocities does the following in each update (i refering to the ith update):
 1)	Update the position of particles by half a timestep (only on the first update): 
