@@ -160,7 +160,7 @@ n = 12, dist_type = 't'):
     # plotting histogram (correlation function)
     ax2 = plt.subplot(222)
     ax2.set_xlabel('Seperation r (pc) (Smoothing length = %.2f pc, max. box sep. = %.2f pc)' 
-    % (smoothing_length, np.sqrt(2)*L))
+    % (smoothing_length, max_sep))
     ax2.set_ylabel('Correlation of pairs seperated by r (pc)')
     ax2.set_title("Correlation Function")
     ax2.set_xlim([softening_length, max_sep])
