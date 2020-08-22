@@ -7,7 +7,7 @@ In each update, the correlation function of the separation of pairs of particles
 # Example video:
 Follow the link below for some example videos of the simulation and a brief explanation of what is happening! :)
 ![Particle simulation image](https://github.com/abbew25/gravitating_particles/blob/master/Screenshot%20(188).png){:height="50%" width="50%"}
-
+<img src="https://github.com/abbew25/gravitating_particles/blob/master/Screenshot%20(188).png" width="40" height="40">
 # Running the code:
 To run the python simulation code in your command prompt:
 ```
