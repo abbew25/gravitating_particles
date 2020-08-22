@@ -46,11 +46,11 @@ RR(r) is the number of particles found in a uniform random distribution which ar
 
 The power spectrum is computed via numerical integration. Note the integral in the simulation does not actually go to infinity because the finite length of the box truncates it at 2√2 L (L being half the box length). The power spectrum is given by:
 
-<img src="https://render.githubusercontent.com/render/math?math=P(k)=2\pi \int_0^{\infty} x^2  ">      
+<img src="https://render.githubusercontent.com/render/math?math=P(k)=2\pi \int_0^{\infty} x^2 \sinc{(kx)} dx  ">      
 
 The softening length η is incorporated into the equation below for the force  between two particles of mass i and j at separation r when r is less than η:
 
-<img src="https://render.githubusercontent.com/render/math?math= F_{ij} = -\frac{G M_i M_j}{r %2B \eta }^2">
+<img src="https://render.githubusercontent.com/render/math?math=F_{ij} = -\frac{G M_i M_j}{r %2B \eta }^{2}">
 
 The leapfrog method uses the follow scheme to update particle positions and velocities does the following in each update (i refering to the ith update):
 1)	Update the position of particles by half a timestep (only on the first update): 
@@ -59,11 +59,11 @@ The leapfrog method uses the follow scheme to update particle positions and velo
 
 2)	Calculating the update to the velocity of the particles by a full timestep:
 
-<img src="https://render.githubusercontent.com/render/math?math= v_{i%2B1} = v_i %2B \Delta t a_i">
+<img src="https://render.githubusercontent.com/render/math?math=v_{i%2B1} = v_i %2B \Delta t a_i">
 
 3)	Update the position of the particle by a full timestep:
      
-<img src="https://render.githubusercontent.com/render/math?math= x_{i%2B1%2B\frac{1}{2}}  = x_{i%2B\frac{1}{2}} %2B \Delta t v_{i%2B1}">
+<img src="https://render.githubusercontent.com/render/math?math=x_{i%2B1%2B\frac{1}{2}} = x_{i%2B\frac{1}{2}} %2B \Delta t v_{i%2B1}">
 
 Steps 2) to 3) are repeated in every update after the first one.
 
