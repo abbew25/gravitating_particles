@@ -277,7 +277,7 @@ n = 12, dist_type = 't'):
     def power_spectrum2(bins, corrs):   
         # 1) Use interpolation to get a more accurate fit of the correlation function (histogram is not smooth)
         tck = interpolate.splrep(bins, corrs, k = 3, s=0) # get B spline
-        xxs = np.arange(1e-6, max_sep, 0.25)   
+        xxs = np.logspace(-5, 3, 5000)   
         xis = interpolate.splev(xxs, tck, der=0)
 
         # 2) Convert rs to ks (get separations in frequency space)
@@ -295,9 +295,9 @@ n = 12, dist_type = 't'):
             P_ks[i] = integral          # save result of integration to array
 
         # get interpolation now again to try smooth the power spectrum
-        # tck = interpolate.splrep(ks, P_ks, k = 3, s=0) 
-        # ks = np.linspace((k_min), (k_max), num = 1000)
-        # P_ks = interpolate.splev(ks, tck, der=0)
+        tck = interpolate.splrep(ks, P_ks, k = 3, s=0) 
+        ks = np.linspace((k_min), (k_max), num = 1000)
+        P_ks = interpolate.splev(ks, tck, der=0)
 
         return ks, P_ks
 
