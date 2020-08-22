@@ -154,7 +154,7 @@ n = 12, dist_type = 't'):
     ax1.set_ylabel('parsecs (pc)')
     ax1.set_title(r"Gravitating  particles (%d) with $m_{max.}$ = %d $m_{\odot}$." % (Np, 
     particle_mass_max))
-    ax1.text(-L+200, L-200, "time = %.2f Myrs" % (time), c = 'white')
+    ax1.text(-L+L/5, L-L/5, "time = %.2f Myrs" % (time), c = 'white')
     
     
     # plotting histogram (correlation function)
@@ -244,7 +244,7 @@ n = 12, dist_type = 't'):
         points.set_offsets(np.reshape(np.concatenate((position[0,:], position[1,:])), (2,Np)).T) 
         for txt in ax1.texts:
             txt.set_visible(False) # getting rid of 'time = something' text put on plot from previous step
-        ax1.text(-L+200, L-200, "time = %.2f Myrs" % (time), c = 'white') #update current time in simulation on the plot
+        ax1.text(-L+L/5, L-L/5, "time = %.2f Myrs" % (time), c = 'white') #update current time in simulation on the plot
         
 
         # 4) get the correlation function and plot it
@@ -274,27 +274,23 @@ n = 12, dist_type = 't'):
 
     # function to get matter power spectrum (just requires bin values (x-axis)
     #  and correlations (y - axis) from correlation function histogram)
-    def power_spectrum2(bins, corrs):   
-        # 1) Use interpolation to get a more accurate fit of the correlation function (histogram is not smooth)
-        tck = interpolate.splrep(bins, corrs, k = 3, s=0) # get B spline
-        xxs = np.logspace(-5, 3, 5000)   
-        xis = interpolate.splev(xxs, tck, der=0)
+    def power_spectrum2(bins, corrs):
 
-        # 2) Convert rs to ks (get separations in frequency space)
-        ks = 2*np.pi/xxs  
+        # 1) Convert rs to ks (get separations in frequency space)
+        ks = 2*np.pi/bins  
         ks = ks[::-1]     # get order of ks in increasing k
 
-        # 3) Now use a for loop to get the P(k) (iterating through ks) 
+        # 2) Now use a for loop to get the P(k) (iterating through ks) 
         # by doing numerical integration with scipy
         # of the fourier transform of the correlation function
         P_ks = np.zeros(len(ks))
         for i in np.arange(len(ks)):    #iterate through ks to get P(k)
             # do a trapezoidal rule integral
-            y_points = Pk(ks[i], xxs, xis)
-            integral = integrate.trapz(xxs, y_points)
+            y_points = Pk(ks[i], bins, corrs)
+            integral = integrate.trapz(bins, y_points)
             P_ks[i] = integral          # save result of integration to array
 
-        # get interpolation now again to try smooth the power spectrum
+        # 3) get interpolation to try to smooth the power spectrum
         tck = interpolate.splrep(ks, P_ks, k = 3, s=0) 
         ks = np.linspace((k_min), (k_max), num = 1000)
         P_ks = interpolate.splev(ks, tck, der=0)
