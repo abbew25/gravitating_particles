@@ -40,23 +40,23 @@ A periodic boundary condition is encoded so that ‘new’ particles are always 
 
 Due to the finite length of the box, the correlation function and power spectrum are limited by a maximum possible distance particle pairs can be separated /minimum frequency in space and thus are truncated. The correlation function ξ(r) is calculated using the Peebles-Hauser approximation:
 
-<img src="https://render.githubusercontent.com/render/math?math=<\xi(r)=(N_r/N_d )^2 (DD(r)/RR(r) )-1"> 
+<img src="https://render.githubusercontent.com/render/math?math=\xi(r)=(\frac{N_r}{N_d}^2)\frac{DD(r)}{RR(r)}-1"> 
 
 RR(r) is the number of particles found in a uniform random distribution which are separation by some distance in the interval r+dr, DD(r) is the same for the particles in the simulation distribution, N_r is the number of particles in the uniform distribution, N_d is the number of particles in the simulation.
 
 The power spectrum is computed via numerical integration. Note the integral in the simulation does not actually go to infinity because the finite length of the box truncates it at 2√2 L (L being half the box length). The power spectrum is given by:
-<img src="https://render.githubusercontent.com/render/math?math=<P(k)=2π \int_0^{\infty} ">                                                 
+<img src="https://render.githubusercontent.com/render/math?math=P(k)=2\pi \int_0^{\infty} x^2  ">                                                 
 
 The softening length η is incorporated into the equation below for the force F_ij  between two particles of mass M_j and M_i at separation r if r<η:
-<img src="https://render.githubusercontent.com/render/math?math=<F_ij= -(GM_i M_j)/(r+η)^2">
+<img src="https://render.githubusercontent.com/render/math?math=F_ij= -(GM_i M_j)/(r+\eta)^2">
 The leapfrog method uses the follow scheme to update particle positions and velocities does the following in each update (i refering to the ith update):
 1)	Update the position of particles by half a timestep (only on the first update): 
-<img src="https://render.githubusercontent.com/render/math?math=<x_(1/2)  =x_i+Δt/2 v">
+<img src="https://render.githubusercontent.com/render/math?math=x_(1/2)=x_i+\Deltat/2v ">
 2)	Calculating a_i the velocity of the particles by a full timestep:
-<img src="https://render.githubusercontent.com/render/math?math=<v_(i+1)  =v_i+Δta_i">
+<img src="https://render.githubusercontent.com/render/math?math= v_(i+1)=v_i+\Deltata_i ">
 3)	Update the position of the particle by a full timestep:
      
-<img src="https://render.githubusercontent.com/render/math?math=<x_(i+1+1/2)  =x_(i+1/2)+Δtv_(i+1 )">
+<img src="https://render.githubusercontent.com/render/math?math=x_{i+1+1/2}  =x_(i+1/2)+\Deltatv_(i+1 )">
 
 Steps 2) to 3) are repeated in every update after the first one.
 
