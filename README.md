@@ -6,10 +6,10 @@ In each update, the correlation function of the separation of pairs of particles
 
 ## Table of contents:
 * [Running the code / Technologies required](#running-the-code---technologies-required)
-* [Notes on the accuracy of the simulation and approximations used](# Notes on the accuracy of the simulation and approximations used)
-* [Equations/physics](# Equations/physics)
-* [Overview of hierarchy of functions](# Overview of hierarchy of functions)
-* [Interpreting the results](# Interpreting the results)
+* [Notes on the accuracy of the simulation and approximations used](#notes-on-the-accuracy-of-the-simulation-and-approximations-used)
+* [Equations/physics](#equations---physics)
+* [Overview of hierarchy of functions](#overview-of-hierarchy-of-functions)
+* [Interpreting the results](#interpreting-the-results)
 
 # Running the code / Technologies required
 This code was created using Python 3.8. To run the python simulation code in your command prompt:
