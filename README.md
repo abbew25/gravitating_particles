@@ -18,7 +18,7 @@ python Grav_particle_sim_AbbeW.py
 ```
 Only the python file Grav_particle_sim_AbbeW.py is required. The modules numpy, matplotlib and scipy are required.
 
-A description of all the input parameters required for the code is written in the python file - just call help(run_particle_sim()) within the code to get a description of the input parameters printed to the terminal. Default values are set for each parameter, but the user has the option to enter them themselves.
+A description of all the input parameters required for the code is written in the python file - just call ```help(run_particle_sim())``` within the code to get a description of the input parameters printed to the terminal. Default values are set for each parameter, but the user has the option to enter them themselves.
 
 Go to line 312 to change the file path the video is saved to and the name of the video:
 ```
