@@ -33,7 +33,7 @@ You can ignore this warning, the function ```np.where()``` from the numpy module
 
 # Notes on the accuracy of the simulation, approximations used and limitations
 The leapfrog method has been chosen over the Euler method because it is more accurate for the same amount of computational effort and is able to exactly serve the energy of the particles in the system and angular momentum. One should note the leapfrog/Euler method are not generally very efficient for very large numbers of particles. This is because the number of computations required to calculate the acceleration of each particle by each other partucke due to their gravitational interactions involves on the order of N(N-1) computations for each update of the particles velocities, where N refers to the number of particles in the simulation. The simulation will become slower as the number of particles is increased (it gets quite slow for more than a few hundred particles).
-The particles require a ‘softening length’ to be included in the equation to calculate the acceleration by each other particle, because the particles are simulated as ‘points’ which is not representative of any real physical situations – point particles don’t exist in nature. If the softening length is not included to compensate for the fact the particles may reach a separation of 'zero', the acceleration of the particles by others can approach infinity (resulting in NaNs) if they get too close. The softening length serves to stop the acceleration becoming too big and suppresses close interactions. This approximation is at the sacrifice of accuracy and therefore the resolution of the simulation is limited by the softening length (no real physical processes can be considered accurate in the simulation on scales smaller than this length). The user is advised also, that for better accuracy, the timestep in each update should be chosen to be around Δt = final_t/Nt ~L/v  where L is the softening length, v is the typical velocity of particles in the system and final_t just refers to a variable that sets how long the simulation runs for.
+The particles require a ‘softening length’ to be included in the equation to calculate the acceleration by each other particle, because the particles are simulated as ‘points’ which is not representative of any real physical situations – point particles don’t exist in nature. If the softening length is not included to compensate for the fact the particles may reach a separation of 'zero', the acceleration of the particles by others can approach infinity (resulting in NaNs) if they get too close. The softening length serves to stop the acceleration becoming too big and suppresses close interactions. This approximation is at the sacrifice of accuracy and therefore the resolution of the simulation is limited by the softening length (no real physical processes can be considered accurate in the simulation on scales smaller than this length). The user is advised also, that for better accuracy, the timestep in each update should be chosen to be around Δt = ```final_t/Nt``` ~L/v  where L is the softening length, v is the typical velocity of particles in the system and ```final_t``` just refers to a variable that sets how long the simulation runs for.
 
 Another points to consider is that the way in which the power spectrum is computed is not extremely accurate. The power spectrum is computed via a numerical integration of the correlation function, however the histogram for the correlation function that is plotted is generally not smooth (unless a very large number of particles and bins are used). The correlation function is interpolated first to try smooth it for the numerical integration to obtain the power spectrum, however the results are still not perfect and additionally the integral from zero to infinity (see next section) is being truncated. The power spectrum output should be interpreted with this in mind.
 
@@ -45,9 +45,9 @@ Due to the finite length of the box, the correlation function and power spectrum
 
 <img src="https://render.githubusercontent.com/render/math?math=\xi(r)=(\frac{N_r}{N_d})^2\frac{DD(r)}{RR(r)}-1"> 
 
-RR(r) is the number of particles found in a uniform random distribution that are separated by some distance in an interval r+dr, DD(r) is the same for the particles in the simulation distribution, N_r is the number of particles in the uniform distribution, N_d is the number of particles in the simulation.
+RR(r) is the number of particles found in a uniform random distribution that are separated by some distance in an interval r+dr, DD(r) is the same for the particles in the simulation distribution, <img src="https://render.githubusercontent.com/render/math?math=N_r">  is the number of particles in the uniform distribution, <img src="https://render.githubusercontent.com/render/math?math=N_d ">  is the number of particles in the simulation. This function can easily be computed by simply counting the number of particles separated by various distances and binning them.
 
-The power spectrum is computed via numerical integration. Note the integral in the simulation does not actually go to infinity because the finite length of the box truncates it at 2√2L (L being half the box length). The power spectrum is given by:
+The power spectrum is computed via numerical integration of the correlation function. Note the integral in the simulation does not actually go to infinity because the finite length of the box truncates the correlation function at separations of 2√2L (L being half the box length). The power spectrum is given by:
 
 <img src="https://render.githubusercontent.com/render/math?math=P(k)=2\pi \int_0^{\infty} x^2 \sinc{(kx)} dx  ">      
 
@@ -59,12 +59,14 @@ The softening length η (as discussed in the previous section) is incorporated i
 
 <img src="https://render.githubusercontent.com/render/math?math=F_{ij} = -\frac{G M_i M_j}{r %2B \eta }^{2}">
 
+These equations allow us to calculate the acceleration on each particle by all others.
+
 The leapfrog method uses the following scheme to update the particles positions and velocities in each update (here i is refering to the ith update):
-1)	Update the position of each particle by half a timestep (only on the first update): 
+1)	Update the position of each particle x by half a timestep (only on the first update, v here is the velocity of the particle): 
 
 <img src="https://render.githubusercontent.com/render/math?math=x_{\frac{1}{2}} =x_i %2B \frac{ \Delta t v }{2}">
 
-2)	Calculating the update to the velocity of each particle by a full timestep:
+2)	Calculating the update to the velocity of each particle by a full timestep (here a is the acceleration on the particle):
 
 <img src="https://render.githubusercontent.com/render/math?math=v_{i%2B1} = v_i %2B \Delta t a_i">
 
@@ -72,20 +74,21 @@ The leapfrog method uses the following scheme to update the particles positions 
      
 <img src="https://render.githubusercontent.com/render/math?math=x_{i%2B1%2B\frac{1}{2}} = x_{i%2B\frac{1}{2}} %2B \Delta t v_{i%2B1}">
 
-Steps 2) to 3) are repeated in every update after the first one.
+Steps 2) to 3) are repeated in every update after the first one through the simulation.
 
 # Overview of hierarchy of functions
 The main program just gets user input and then calls ```run_particle_sim()```.
 
 ```run_particle_sim()```:
-- set ups initial values of parameters /quantities needed / initialises variables
-- sets up the settings and commands for plotting the particle distribution, correlation function and power spectrum
+- set ups initial values of all variables based on input parameters to the function.
+- sets up the settings and commands for plotting the particle distribution, correlation function and power spectrum.
 - calls the function ```animation.FuncAnimation()``` which calls the function ```update()``` many times
+to create each frame of the simulation video.
 
 The function ```update()```:
-- calculates updates to each particles' position and velocity (calls ```acceleration()``` to calculate the acceleration on each of the particles by all others and ```apply_boundary()``` to apply the boundary conditions after their positions have been updated) - it then sets the results computed for the particles positions' in the ```scatter()``` plot of the particle distribution via the command ```points``` 
-- calculates the correlation function by calling ```separation()``` and then sets the results computed in the plot for the correlation function via the command ```points2```
-- calculates the power spectrum by calling ```power_spectrum2()``` (which calls ```Pk()```) to numerically integrate the correlation function to get the power spectrum and then sets the results computed in the plot of the power spectrum via the command ```points3```
+- calculates updates to each particles' position and velocity (calls ```acceleration()``` to calculate the acceleration on each of the particles by all others and ```apply_boundary()``` to apply the boundary conditions after their positions have been updated) - it then sets the results computed for the particles positions' in the ```scatter()``` plot of the particle distribution via the command ```points```.
+- calculates the correlation function by calling ```separation()``` which computes the separations between all the particles and bins them, then the Peeble-Hauser approximation is used to calculate the correlation function. Finally, it sets the results computed in the plot/histogram for the correlation function via the command ```points2```.
+- calculates the power spectrum by calling ```power_spectrum2()``` (which calls ```Pk()```) to numerically integrate the correlation function to get the power spectrum using the equation for the fourier transform of the correlation function given previously. Then, it sets the results computed in the plot of the power spectrum via the command ```points3```.
 
 # Tips on interpreting the results 
 ## The particle distribution
