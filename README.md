@@ -62,7 +62,7 @@ The softening length η (as discussed in the previous section) is incorporated i
 The leapfrog method uses the following scheme to update the particles positions and velocities in each update (here i is refering to the ith update):
 1)	Update the position of each particle by half a timestep (only on the first update): 
 
-<img src="https://render.githubusercontent.com/render/math?math=x_{\frac{1}{2}} =x_i %2B \frac{ \Delta t }{2v}">
+<img src="https://render.githubusercontent.com/render/math?math=x_{\frac{1}{2}} =x_i %2B \frac{ \Delta t v }{2}">
 
 2)	Calculating the update to the velocity of each particle by a full timestep:
 
@@ -97,7 +97,7 @@ The function ```update()```:
 *	if they just fly around and don’t seem to interact, the velocity is probably very high (their kinetic energy is greater than the potential energy due to gravitational attractions) and thus there appears to be no evidence of any gravitational attraction
 
 ## Correlation function:
-•	if the correlation function is very big at small separations (r), many particles should be close to each other in the plot showing the particle distribution (we expect the probability of finding particles at small separations to be large!) - the same idea in the opposite situation
+*	if the correlation function is very big at small separations (r), many particles should be close to each other in the plot showing the particle distribution (we expect the probability of finding particles at small separations to be large!) - the same idea in the opposite situation
 
 * If the plot is totally zero everywhere the particles have no correlations at all - so the distribution in the particle distribution plot should quite uniform
 
