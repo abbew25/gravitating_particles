@@ -2,7 +2,9 @@
 
 This code simulates a system of gravitating particles and plots their distribution in space (plots in 2D, although a 3D distribution of particles may be chosen). The updates to the positions and velocities of particles are calculated with the leapfrog method (similar to Euler’s method). 
 
-In each update, the correlation function of the separation of pairs of particles and the corresponding power spectrum (the fourier transform of the correlation function) is computed. The correlation function is essentially a plot of the excess probability of finding a pair of particles separated by some distance, compared to a uniform distribution. The power spectrum is the same but in frequency space (it contains all the same information) - it tells you how likely you are to find a certain spatial frequency of particles. The particle distribution, correlation function and power spectrum are plotted and saved in a video to be viewed after the code has finished running. 
+In each update, the correlation function of the separation of pairs of particles and the corresponding power spectrum (the fourier transform of the correlation function) is computed. The correlation function is essentially a plot of the excess probability of finding a pair of particles separated by some distance, compared to a uniform distribution. The power spectrum is the same but in frequency space (it contains all the same information) - it tells you how likely you are to find a certain spatial frequency of particles. The particle distribution, correlation function and power spectrum are plotted and saved in a video to be viewed after the code has finished running.
+
+## See this link to a youtube video explaining more about this code / demonstrating some interesting concepts I learn't while working on this project!
 
 ## Table of contents:
 * [Running the code / Technologies required](#running-the-code---technologies-required)
