@@ -3,7 +3,7 @@
 # About:
 # This code simulates gravitating particles and also calculates their correlation
 # function and power spectrum for the particle distribution for each time step.
-# Change line 305 to in ani.save() before you run this code to save the video it generates
+# Change line 309 to in ani.save() before you run this code to save the video it generates
 # with plots in a folder you would like it to go in.
 
 # Input files: None. 
