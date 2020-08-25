@@ -5,7 +5,7 @@ This code simulates a system of gravitating particles and plots their distributi
 In each update, the correlation function of the separation of pairs of particles and the corresponding power spectrum (the fourier transform of the correlation function) is computed. The correlation function is essentially a plot of the excess probability of finding a pair of particles separated by some distance, compared to a uniform distribution. The power spectrum is the same but in frequency space (it contains all the same information) - it tells you how likely you are to find a certain spatial frequency of particles. The particle distribution, correlation function and power spectrum are plotted and saved in a video to be viewed after the code has finished running.
 
 ## You can follow this link to a youtube video related to this code, which very briefly demonstrates some interesting concepts I learn't while working on this project.
-<iframe width="560" height="315" src="https://www.youtube.com/embed/9h1CMGiAvKk" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+Link to video: https://www.youtube.com/embed/9h1CMGiAvKk
 
 ## Table of contents:
 * [Running the code / Technologies required](#running-the-code---technologies-required)
