@@ -35,12 +35,12 @@ n = 30, dist_type = 'g'):
 
         t_final - the time the simulation ends (myrs) at (from 0 to t_end = e.g. 1000 Myrs)
 
-        L - half of the height and width of the 2d box scatterplot
+        L - half of the height and width of the 2d box scatterplot (parsecs (pc))
 
         num_bins - the number of bins used in the correlation function and power spectrum 
         (sets smoothing scale)
 
-        softening_length - the softening length (sets resolution scale)
+        softening_length - the softening length (sets resolution scale) (pc)
 
         Np - number of particles (number of updates /frames computed)
 
@@ -48,7 +48,7 @@ n = 30, dist_type = 'g'):
 
         Nd - number of spatial dimensions (pick 2 or 3 only)
 
-        v_max - max. initial velocity of any particle (solar masses/Myrs)
+        v_max - max. initial velocity of any particle (pc/Myrs)
 
         n - n is the standard deviation of a gaussian distribution (if this OR the blobs
         -of-particles type distributions are chosen for the initial positions of particles)
