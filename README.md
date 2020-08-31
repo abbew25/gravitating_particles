@@ -58,12 +58,12 @@ In the code, the integral is taken from just zero to the maximum separation any 
 
 In general the force between two particles of mass i and j at separation r is computed as:
 
-<img src="https://render.githubusercontent.com/render/math?math=F_{ij} = -\frac{G M_i M_j}{r}^{2}">
+<img src="https://render.githubusercontent.com/render/math?math=F_{ij} = -\frac{G M_i M_j}{r^{2}}">
 
 This code calculates the force on each individual particle by every single other particle via the above equation above one at a time. This can be done because the positions of all particles in every dimension is stored in a vector that is updated in each step of the simulation. 
 The softening length η (as discussed in the previous section) is incorporated into the equation below for the force between two particles of mass i and j at separation r when r is less than η:
 
-<img src="https://render.githubusercontent.com/render/math?math=F_{ij} = -\frac{G M_i M_j}{r %2B \eta }^{2}">
+<img src="https://render.githubusercontent.com/render/math?math=F_{ij} = -\frac{G M_i M_j}{(r %2B \eta)^{2} }">
 
 Thus even if r = 0 for some two particles, the force between the two particles will not be infinite as long as η is not chosen to be zero. 
 
