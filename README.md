@@ -4,9 +4,6 @@ This code simulates a system of gravitating particles and plots their distributi
 
 In each update, the correlation function of the separation of pairs of particles and the corresponding power spectrum (the fourier transform of the correlation function) is computed. The correlation function is essentially a plot of the excess probability of finding a pair of particles separated by some distance, compared to a uniform distribution. The power spectrum is the same but in frequency space (it contains all the same information) - it tells you how likely you are to find a certain spatial frequency of particles. The particle distribution, correlation function and power spectrum are plotted and saved in a video to be viewed after the code has finished running.
 
-## You can follow this link to a youtube video related to this code, which very briefly demonstrates some interesting concepts I learned while working on this project.
-Link to video: https://youtu.be/wKK5RlYRBdQ 
-
 ## Table of contents:
 * [Running the code / Technologies required](#running-the-code---technologies-required)
 * [Notes on the accuracy of the simulation and approximations used](#notes-on-the-accuracy-of-the-simulation,-approximations-used-and-limitations)
@@ -19,7 +16,7 @@ This code was created using Python 3.8. To run the python simulation code in you
 ```
 python Grav_particle_sim_AbbeW.py
 ```
-Only the python file Grav_particle_sim_AbbeW.py is required. The modules numpy, matplotlib and scipy are required.
+Only the python file Grav_particle_sim_AbbeW.py is required. The modules numpy, matplotlib and scipy are required. You also need to have ffmpeg installed.
 
 A description of all the input parameters required for the code is written in the python file - just call ```help(run_particle_sim())``` within the code to get a description of the input parameters printed to the terminal. Default values are set for each parameter so you can just run the code quickly, but the user has the option to enter them themselves.
 
