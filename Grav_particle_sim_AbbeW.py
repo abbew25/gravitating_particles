@@ -306,7 +306,7 @@ n = 30, dist_type = 'g'):
     ani = animation.FuncAnimation(fig, update, frames=Nt,interval = frame_duration)
     
     # save to mpeg file: 
-    ani.save(r"C:\Users\abbew\PythonProjects\test3.Mp4")
+    ani.save(r"test3.Mp4")
     print('Finished.')
     return 0
 
