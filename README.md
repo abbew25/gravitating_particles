@@ -20,10 +20,6 @@ Only the python file Grav_particle_sim_AbbeW.py is required. The modules numpy, 
 
 A description of all the input parameters required for the code is written in the python file - just call ```help(run_particle_sim())``` within the code to get a description of the input parameters printed to the terminal. Default values are set for each parameter so you can just run the code quickly, but the user has the option to enter them themselves.
 
-You might like to go to line 309 to change the file path the video is saved to and the name of the video:
-```
-ani.save(r"C:\Users\abbew\PythonProjects\Project1_PHYS4080\test.Mp4")
-```
 Note that you might see the following warning when you run the code:
 ```
 RuntimeWarning: invalid value encountered in true_divide
