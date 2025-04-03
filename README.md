@@ -31,7 +31,7 @@ You can ignore this warning, the function ```np.where()``` from the numpy module
 
 ## Notes on the accuracy of the simulation, approximations used and limitations
 The leapfrog method has been chosen over the Euler method because it is more accurate for the same amount of computational effort and is able to exactly serve the energy of the particles in the system and angular momentum. One should note however, that the leapfrog/Euler method are not generally very efficient for very large numbers of particles. This is because the number of computations required to calculate the acceleration of each particle by each other partucke due to their gravitational interactions involves on the order of many computations for each update of the particles velocities. This simulation will become slower quite quickly as the number of particles is increased (it gets quite slow for more than a few hundred particles). Therefore it's performance is limited to simulating just a few hundred particles.
-The particles require a ‘softening length’ as an input parameter to the code so it can be included in the equations used to calculate the acceleration on every particle by each other. This is because the particles are simulated as ‘points’ which is not representative of any real physical situations – point particles don’t exist in nature. If the softening length is not included to compensate for the fact the particles may reach a separation of 'zero', the acceleration of the particles by each other may approach infinity (resulting in NaNs) if they get too close. The softening length serves to stop the acceleration becoming too big and suppresses close interactions between the particles. This approximation is at the sacrifice of accuracy on smaller scales and therefore the resolution of the simulation is limited by the softening length chosen (no real physical processes can be considered accurate in the simulation on scales smaller than this length). The user is advised also, that for the best accuracy, the timestep in each update should be chosen to be around Δt = ```final_t/Nt``` ~L/v  where L is the softening length, v is the typical velocity of particles in the system. ```final_t``` just refers to a variable that sets how long the simulation runs for in Gyrs, while ```Nt``` is the number of updates that occur, thus together they set Δt.
+The particles require a ‘softening length’ as an input parameter to the code so it can be included in the equations used to calculate the acceleration on every particle by each other. This is because the particles are simulated as ‘points’ which is not representative of any real physical situations – point particles don’t exist in nature. If the softening length is not included to compensate for the fact the particles may reach a separation of 'zero', the acceleration of the particles by each other may approach infinity (resulting in NaNs) if they get too close. The softening length serves to stop the acceleration becoming too big and suppresses close interactions between the particles. This approximation is at the sacrifice of accuracy on smaller scales and therefore the resolution of the simulation is limited by the softening length chosen (no real physical processes can be considered accurate in the simulation on scales smaller than this length). The user is advised also, that for the best accuracy, the timestep in each update should be chosen to be around $Δt$ = ```final_t/Nt``` $~L/v$  where $L$ is the softening length, $v$ is the typical velocity of particles in the system. ```final_t``` just refers to a variable that sets how long the simulation runs for in Gyrs, while ```Nt``` is the number of updates that occur, thus together they set $Δt$.
 
 Another important point to consider is that the way in which the power spectrum is computed is unfortunately not extremely accurate. The power spectrum is computed via a numerical integration of the correlation function via a fourier transform, however the correlation function that is calculated from the particle distribution is generally not smooth (unless a very large number of particles and bins are used, but even then it isn't very smooth). The correlation function is interpolated first to try smooth it for the numerical integration to obtain the power spectrum, and fixed gaussian quadrature integration is used to calculate the power spectrum. However, the results are still found not be extremely accurate. Additionally, the integral over the correlation function has limits from zero to infinity (see next section for more detail) but is has to be truncated since the space being simulated is only finite. The power spectrum output should be interpreted with this in mind.
 
@@ -43,39 +43,39 @@ Due to the finite length of the box, the correlation function and power spectrum
 
 $\xi(r)=(\frac{N_r}{N_d})^2\frac{DD(r)}{RR(r)}-1$
 
-RR(r) is the number of particles found in a uniform random distribution that are separated by some distance in an interval r+dr, DD(r) is the same for the particles in the simulation distribution, <img src="https://render.githubusercontent.com/render/math?math=N_r">  is the number of particles in the uniform distribution, <img src="https://render.githubusercontent.com/render/math?math=N_d ">  is the number of particles in the simulation. This function can easily be computed by simply counting the number of particles separated by various distances and binning them to get RR(r) for the particle distribution and DD(r) for a uniform distribution.
+RR(r) is the number of particles found in a uniform random distribution that are separated by some distance in an interval $r+dr$, $DD(r)$ is the same for the particles in the simulation distribution, $N_r$ is the number of particles in the uniform distribution, <img $N_d$ is the number of particles in the simulation. This function can easily be computed by simply counting the number of particles separated by various distances and binning them to get $RR(r)$ for the particle distribution and DD(r) for a uniform distribution.
 
 The power spectrum is computed via numerical integration of the correlation function. Note the integral in the simulation does not actually go to infinity because the finite length of the box truncates the correlation function at separations of 2√2L (L being half the box length). However, the power spectrum is given by:
 
-<img src="https://render.githubusercontent.com/render/math?math=P(k)=2\pi \int_0^{\infty} x^2 \sinc{(kx)} dx  ">   
+$P(k)=2\pi \int_0^{\infty} x^2 \sinc{(kx)} dx$
 
 In the code, the integral is taken from just zero to the maximum separation any particles can have in the box, and for larger separations the correlation function is assumed to be zero and thus has no contribution to the power spectrum. This means we are assuming that there are no correlations on larger length scales than the box. For the integral the correlation function is interpolated by using the scipy function splrep and passing the spline is returns to integral above to compute the correlation at any given x, allowing the integration to be smoother. Then the result of integration is interpolated again so a smooth power spectrum can be plotted.
 
-In general the force between two particles of mass i and j at separation r is computed as:
+In general the force between two particles of mass $i$ and $j$ at separation $r$ is computed as:
 
-<img src="https://render.githubusercontent.com/render/math?math=F_{ij} = -\frac{G M_i M_j}{r^{2}}">
+$F_{ij} = -\frac{G M_i M_j}{r^{2}}$
 
 This code calculates the force on each individual particle by every single other particle via the above equation above one at a time. This can be done because the positions of all particles in every dimension is stored in a vector that is updated in each step of the simulation. 
-The softening length η (as discussed in the previous section) is incorporated into the equation below for the force between two particles of mass i and j at separation r when r is less than η:
+The softening length $η$ (as discussed in the previous section) is incorporated into the equation below for the force between two particles of mass $i$ and j at separation $r$ when $r$ is less than $η$:
 
-<img src="https://render.githubusercontent.com/render/math?math=F_{ij} = -\frac{G M_i M_j}{(r %2B \eta)^{2} }">
+$F_{ij} = -\frac{G M_i M_j}{(r %2B \eta)^{2}$
 
-Thus even if r = 0 for some two particles, the force between the two particles will not be infinite as long as η is not chosen to be zero. 
+Thus even if $r = 0$ for some two particles, the force between the two particles will not be infinite as long as $η$ is not chosen to be zero. 
 
 The above equations allow us to calculate the acceleration on each particle by all others.
 
-The leapfrog method uses the following scheme to update the particles positions and velocities in each update (in the equations below, i is refering to the ith update):
-1)	Update the position of each particle x by half a timestep (only on the first update, v here is the velocity of the particle): 
+The leapfrog method uses the following scheme to update the particles positions and velocities in each update (in the equations below, $i$ is refering to the $i$th update):
+1)	Update the position of each particle $x$ by half a timestep (only on the first update, $v$ here is the velocity of the particle): 
 
-<img src="https://render.githubusercontent.com/render/math?math=x_{\frac{1}{2}} =x_i %2B \frac{ \Delta t v }{2}">
+$x_{\frac{1}{2}} =x_i %2B \frac{ \Delta t v }{2}$
 
-2)	Calculating the update to the velocity of each particle by a full timestep (here a is the computed acceleration on the particle by all other particles on this step):
+2)	Calculating the update to the velocity of each particle by a full timestep (here $a$ is the computed acceleration on the particle by all other particles on this step):
 
-<img src="https://render.githubusercontent.com/render/math?math=v_{i%2B1} = v_i %2B \Delta t a_i">
+$v_{i%2B1} = v_i %2B \Delta t a_i$
 
 3)	Update the position of each particle by a full timestep (here v is the newly updated velocity from step 2)):
      
-<img src="https://render.githubusercontent.com/render/math?math=x_{i%2B1%2B\frac{1}{2}} = x_{i%2B\frac{1}{2}} %2B \Delta t v_{i%2B1}">
+$x_{i%2B1%2B\frac{1}{2}} = x_{i%2B\frac{1}{2}} %2B \Delta t v_{i%2B1}$
 
 Steps 2) to 3) are repeated in every update after the first one over the simulation so the motion of the particles can be seen.
 
