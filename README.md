@@ -41,7 +41,7 @@ A periodic boundary condition is encoded so that ‘new’ particles are always 
 
 Due to the finite length of the box, the correlation function and power spectrum are limited by a maximum possible distance particle pairs can be separated in space/minimum frequency and thus are truncated. The correlation function ξ(r) is calculated using the Peebles-Hauser approximation:
 
-<img src="https://render.githubusercontent.com/render/math?math=\xi(r)=(\frac{N_r}{N_d})^2\frac{DD(r)}{RR(r)}-1"> 
+$\xi(r)=(\frac{N_r}{N_d})^2\frac{DD(r)}{RR(r)}-1$
 
 RR(r) is the number of particles found in a uniform random distribution that are separated by some distance in an interval r+dr, DD(r) is the same for the particles in the simulation distribution, <img src="https://render.githubusercontent.com/render/math?math=N_r">  is the number of particles in the uniform distribution, <img src="https://render.githubusercontent.com/render/math?math=N_d ">  is the number of particles in the simulation. This function can easily be computed by simply counting the number of particles separated by various distances and binning them to get RR(r) for the particle distribution and DD(r) for a uniform distribution.
 
