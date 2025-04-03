@@ -39,15 +39,15 @@ A periodic boundary condition is encoded so that ‘new’ particles are always 
 
 ## Equations/physics
 
-Due to the finite length of the box, the correlation function and power spectrum are limited by a maximum possible distance particle pairs can be separated in space/minimum frequency and thus are truncated. The correlation function ξ(r) is calculated using the Peebles-Hauser approximation:
+Due to the finite length of the box, the correlation function and power spectrum are limited by a maximum possible distance particle pairs can be separated in space/minimum frequency and thus are truncated. The correlation function $\xi(r)$ is calculated using the Peebles-Hauser approximation:
 
 $\xi(r)=(\frac{N_r}{N_d})^2\frac{DD(r)}{RR(r)}-1$
 
-RR(r) is the number of particles found in a uniform random distribution that are separated by some distance in an interval $r+dr$, $DD(r)$ is the same for the particles in the simulation distribution, $N_r$ is the number of particles in the uniform distribution, <img $N_d$ is the number of particles in the simulation. This function can easily be computed by simply counting the number of particles separated by various distances and binning them to get $RR(r)$ for the particle distribution and DD(r) for a uniform distribution.
+RR(r) is the number of particles found in a uniform random distribution that are separated by some distance in an interval $r+dr$, $DD(r)$ is the same for the particles in the simulation distribution, $N_r$ is the number of particles in the uniform distribution, $N_d$ is the number of particles in the simulation. This function can easily be computed by simply counting the number of particles separated by various distances and binning them to get $RR(r)$ for the particle distribution and $DD(r)$ for a uniform distribution.
 
-The power spectrum is computed via numerical integration of the correlation function. Note the integral in the simulation does not actually go to infinity because the finite length of the box truncates the correlation function at separations of 2√2L (L being half the box length). However, the power spectrum is given by:
+The power spectrum is computed via numerical integration of the correlation function. Note the integral in the simulation does not actually go to infinity because the finite length of the box truncates the correlation function at separations of $2\sqrt{2}L$ ($L$ being half the box length). However, the power spectrum is given by:
 
-$P(k)=2\pi \int_0^{\infty} x^2 \sinc{(kx)} dx$
+$P(k)=2\pi \int_0^{\infty} x^2 sinc{(kx)} dx$
 
 In the code, the integral is taken from just zero to the maximum separation any particles can have in the box, and for larger separations the correlation function is assumed to be zero and thus has no contribution to the power spectrum. This means we are assuming that there are no correlations on larger length scales than the box. For the integral the correlation function is interpolated by using the scipy function splrep and passing the spline is returns to integral above to compute the correlation at any given x, allowing the integration to be smoother. Then the result of integration is interpolated again so a smooth power spectrum can be plotted.
 
@@ -56,9 +56,9 @@ In general the force between two particles of mass $i$ and $j$ at separation $r$
 $F_{ij} = -\frac{G M_i M_j}{r^{2}}$
 
 This code calculates the force on each individual particle by every single other particle via the above equation above one at a time. This can be done because the positions of all particles in every dimension is stored in a vector that is updated in each step of the simulation. 
-The softening length $η$ (as discussed in the previous section) is incorporated into the equation below for the force between two particles of mass $i$ and j at separation $r$ when $r$ is less than $η$:
+The softening length $η$ (as discussed in the previous section) is incorporated into the equation below for the force between two particles of mass $i$ and $j$ at separation $r$ when $r$ is less than $\eta$:
 
-$F_{ij} = -\frac{G M_i M_j}{(r %2B \eta)^{2}$
+$F_{ij} = -\frac{G M_i M_j}{(r + \eta)^{2}}$
 
 Thus even if $r = 0$ for some two particles, the force between the two particles will not be infinite as long as $η$ is not chosen to be zero. 
 
@@ -67,15 +67,15 @@ The above equations allow us to calculate the acceleration on each particle by a
 The leapfrog method uses the following scheme to update the particles positions and velocities in each update (in the equations below, $i$ is refering to the $i$th update):
 1)	Update the position of each particle $x$ by half a timestep (only on the first update, $v$ here is the velocity of the particle): 
 
-$x_{\frac{1}{2}} =x_i %2B \frac{ \Delta t v }{2}$
+$x_{\frac{1}{2}} =x_i + \frac{ \Delta t v }{2}$
 
 2)	Calculating the update to the velocity of each particle by a full timestep (here $a$ is the computed acceleration on the particle by all other particles on this step):
 
-$v_{i%2B1} = v_i %2B \Delta t a_i$
+$v_{i+1} = v_i + \Delta t a_i$
 
 3)	Update the position of each particle by a full timestep (here v is the newly updated velocity from step 2)):
      
-$x_{i%2B1%2B\frac{1}{2}} = x_{i%2B\frac{1}{2}} %2B \Delta t v_{i%2B1}$
+$x_{i+1+\frac{1}{2}} = x_{i+\frac{1}{2}} + \Delta t v_{i+1}$
 
 Steps 2) to 3) are repeated in every update after the first one over the simulation so the motion of the particles can be seen.
 
